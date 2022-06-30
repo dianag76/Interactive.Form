@@ -16,18 +16,6 @@ const payment= document.getElementById('payment');
 const creditCard= document.getElementById('credit-card');
 const paypal= document.getElementById('paypal');
 const bitcoin= document.getElementById('bitcoin');
-const form= document.querySelector('form');
-const checkbox= document.querySelector('checkbox');
-const activitiesBox= document.getElementById('activities-box');
-const activityHint= document.getElementById('activity-hint');
-let email=document.getElementById('email');
-const emailHint= document.getElementById('email-hint');
-const zip= document.getElementById('zip');
-const zipHint=document.getElementById('zip-hint');
-const ccNum= document.getElementById('cc-num');
-const ccHint= document.getElementById('cc-hint');
-const cvv=document.getElementById('cvv');
-const cvvHint= document.getElementById('cvv-hint');
 
 
 
@@ -100,6 +88,20 @@ payment.addEventListener('change',(e)=> {
     //Form Validation- users will not be allowed to submit a form without submitting 
     // the required information.
 
+const form= document.querySelector('form');
+const checkbox= document.querySelector('checkbox');
+const activitiesBox= document.getElementById('activities-box');
+const activityHint= document.getElementById('activity-hint');
+let email=document.getElementById('email');
+const emailHint= document.getElementById('email-hint');
+const zip= document.getElementById('zip');
+const zipHint=document.getElementById('zip-hint');
+const ccNum= document.getElementById('cc-num');
+const ccHint= document.getElementById('cc-hint');
+const cvv=document.getElementById('cvv');
+const cvvHint= document.getElementById('cvv-hint');
+
+
 
     function nameValidation() {
         let nameValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(nameElement.value);
@@ -170,17 +172,7 @@ payment.addEventListener('change',(e)=> {
     }
     
    
-    function validationPass(element){
-        element.parentElement.classList.add('valid');
-        element.parentElement.classList.remove('not-valid');
-        element.parentElement.lastElementChild.style.display = 'none';
-    }
     
-    function validationFail(element) {
-        element.parentElement.classList.add('not-valid');
-        element.parentElement.classList.remove('valid');
-        element.parentElement.lastElementChild.style.display = 'block';  
-    }
     
     
     for (let i=0; i < activitiesBox.length; i++) {
@@ -193,25 +185,16 @@ payment.addEventListener('change',(e)=> {
     }
     
    
-    form.addEventListener('submit', (e) => {
-        if(!validName()){
-            e.preventDefault();
-        }
-        if (!emailValidation()) {
-            e.preventDefault();
-        }
-        
-        if (!activitiesValid()){
-            e.preventDefault();
-        }
-        if (payment.value === 'credit-card'){
-            if (!creditCardValid()){
-                e.preventDefault();}
-        if (!zipCodeValid()){
-            e.preventDefault();
-        }
-        if (!cvvValid()){
-            e.preventDefault();
-        }
+   
+
+    function validationFail(element){
+        element.parentElement.classList.add('not-valid');
+        element.parentElement.classList.remove('valid');
+        element.parentElement.lastElementChild.style.display = 'block';
     }
-    });
+    
+    function validationPass(element) {
+        element.parentElement.classList.add('valid');
+        element.parentElement.classList.remove('not-valid');
+        element.parentElement.lastElementChild.style.display = 'block';  
+    }
