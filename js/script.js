@@ -171,10 +171,7 @@ const cvvHint= document.getElementById('cvv-hint');
         return ccNumValidation && zipCodeValidation && cvvValidation;;
     }
     
-   
-    
-    
-    
+
     for (let i=0; i < activitiesBox.length; i++) {
         activitiesBox[i].addEventListener('focus', (e) => {
             activitiesBox[i].parentElement.classList = 'focus';
@@ -184,9 +181,7 @@ const cvvHint= document.getElementById('cvv-hint');
         });
     }
     
-   
-   
-
+    
     function validationFail(element){
         element.parentElement.classList.add('not-valid');
         element.parentElement.classList.remove('valid');
@@ -196,5 +191,8 @@ const cvvHint= document.getElementById('cvv-hint');
     function validationPass(element) {
         element.parentElement.classList.add('valid');
         element.parentElement.classList.remove('not-valid');
-        element.parentElement.lastElementChild.style.display = 'block';  
+        element.parentElement.lastElementChild.style.display = 'none';  
     }
+    
+   
+    
