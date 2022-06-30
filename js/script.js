@@ -29,12 +29,13 @@ const ccHint= document.getElementById('cc-hint');
 const cvv=document.getElementById('cvv');
 const cvvHint= document.getElementById('cvv-hint');
 
-
+//adding focus state to the name field 
 nameElement.focus(); 
 
-
+//Hidding "Other Job Role" field by default 
 otherJobRole.type='hidden';
 
+//"Job Role" menu is displayed, if "Other Job Role" is chosen, this is allow for new field input.
 jobRole.addEventListener('change',(e)=>{
     if(e.target.value ==='other'){
         otherJobRole.type='text';
@@ -43,6 +44,8 @@ jobRole.addEventListener('change',(e)=>{
     }
     });
 
+
+    //T-shirt section allows user to pick design followed by colors available. 
     color.disabled= true;
     design.addEventListener('change',(e) => {
        color.disabled= false;
@@ -58,7 +61,7 @@ jobRole.addEventListener('change',(e)=>{
     }});
             
 
-
+//Total cost of selected activities in "Register for Activities" is totaled and display for the user
 let totalCost=0 
 activities.addEventListener('change',(e)=>{
     let activityCost= +e.target.getAttribute('data-cost');
@@ -70,10 +73,7 @@ activities.addEventListener('change',(e)=>{
     activitiesCost.innerHTML= `Total:$${totalCost}`;
 });
 
-
-
-//Payment Info 
-
+//Preferred payment(credit card) and requirements are displayed. Other options are hidden until chosen. 
 bitcoin.hidden = true;
 paypal.hidden = true;
 
@@ -96,24 +96,9 @@ payment.addEventListener('change',(e)=> {
     });
 
   
-//Form Validation- users will not be allowed to submit a form without submitting 
-// the required information.
-
-
+//Form Validation- Users will not be allowed to submit form without the required information.
 
 form.addEventListener('submit', (e) => {
-    
-    function notValid(field) {
-        field.parentNode.classList.add('not-valid');
-        field.parentNode.classList.remove('valid');
-        field.parentNode.lastElementChild.style.display = 'block';
-    }
-    function isValid(field) {
-        field.parentNode.classList.add('valid');
-        field.parentNode.classList.remove('not-valid');
-        field.parentNode.lastElementChild.style.display = 'none';
-    }
-
     function NameValid() {
         return regexName = /^[a-zA-z ,.'-]+$/.test(nameElement);
     };
@@ -157,7 +142,6 @@ form.addEventListener('submit', (e) => {
         isValid(activitiesBox);
     };
 
-
     if (payment.children[1].selected === true) {
         if (!CCNumValid()) {
             e.preventDefault();
@@ -180,6 +164,19 @@ form.addEventListener('submit', (e) => {
     };
 });
 
+function notValid(field) {
+    field.parentNode.classList.add('not-valid');
+    field.parentNode.classList.remove('valid');
+    field.parentNode.lastElementChild.style.display = 'block';
+}
+function isValid(field) {
+    field.parentNode.classList.add('valid');
+    field.parentNode.classList.remove('not-valid');
+    field.parentNode.lastElementChild.style.display = 'none';
+}
+
+
+//Checkboxes in "Register for Activitiy" section are in focus to imporve accessibility.
 for (let i = 0; i < checkbox.length; i++) {
     checkbox[i].addEventListener('focus', (e) => {
         checkbox[i].parentNode.classList.add('focus');
