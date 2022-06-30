@@ -16,7 +16,18 @@ const payment= document.getElementById('payment');
 const creditCard= document.getElementById('credit-card');
 const paypal= document.getElementById('paypal');
 const bitcoin= document.getElementById('bitcoin');
-
+const form= document.querySelector('form');
+const checkbox= document.querySelectorAll('input[type="checkbox"]');
+const activitiesBox= document.getElementById('activities-box');
+const activityHint= document.getElementById('activity-hint');
+let email=document.getElementById('email');
+const emailHint= document.getElementById('email-hint');
+const zip= document.getElementById('zip');
+const zipHint=document.getElementById('zip-hint');
+const ccNum= document.getElementById('cc-num');
+const ccHint= document.getElementById('cc-hint');
+const cvv=document.getElementById('cvv');
+const cvvHint= document.getElementById('cvv-hint');
 
 
 nameElement.focus(); 
@@ -85,114 +96,96 @@ payment.addEventListener('change',(e)=> {
     });
 
   
-    //Form Validation- users will not be allowed to submit a form without submitting 
-    // the required information.
-
-const form= document.querySelector('form');
-const checkbox= document.querySelector('checkbox');
-const activitiesBox= document.getElementById('activities-box');
-const activityHint= document.getElementById('activity-hint');
-let email=document.getElementById('email');
-const emailHint= document.getElementById('email-hint');
-const zip= document.getElementById('zip');
-const zipHint=document.getElementById('zip-hint');
-const ccNum= document.getElementById('cc-num');
-const ccHint= document.getElementById('cc-hint');
-const cvv=document.getElementById('cvv');
-const cvvHint= document.getElementById('cvv-hint');
+//Form Validation- users will not be allowed to submit a form without submitting 
+// the required information.
 
 
 
-    function nameValidation() {
-        let nameValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(nameElement.value);
-        if (nameValid) {
-            validationPass(nameElement);
-            nameHint.style.display= 'none';
-          } else {
-            validationFail(nameElement);
-            nameHint.style.display= 'block';
-          }
-        return nameValid;
+form.addEventListener('submit', (e) => {
+    
+    function notValid(field) {
+        field.parentNode.classList.add('not-valid');
+        field.parentNode.classList.remove('valid');
+        field.parentNode.lastElementChild.style.display = 'block';
     }
-    
-    
-    function emailValidation() {
-        let emailValid = /^[^@]+@[^@.]+\.[a-z]+$/i.test(email.value);
-        if (emailValid) {
-            validationPass(email);
-            emailHint.style.display= 'none';
-          } else {
-            validationFail(email);
-            emailHint.style.display= 'block';
-          }
-        return emailValid;
+    function isValid(field) {
+        field.parentNode.classList.add('valid');
+        field.parentNode.classList.remove('not-valid');
+        field.parentNode.lastElementChild.style.display = 'none';
     }
-    
-   
-    function activityValidation() {
-        let activityValidation = totalCost > 0;
-        if (activityValidation) {
-            validationPass(activitiesBox); 
-            activityHint.style.display= 'none';
-          } else {
-            validationFail(activitiesBox);
-            activityHint.style.display= 'block';
-          }
-        return activityValidation;
-        
-    }
-    
-    
-    function ccValidation() {
-        let cardNumberValidation = /^\d{13,16}$/.test(ccNum.value);
-        if (cardNumberValidation) {
-            validationPass(ccNum);
-            ccHint.style.display= 'none';
-          } else {
-            validationFail(ccNum);
-            ccHint.style.display= 'block';
-          }
-        let zipCodeValidation = /^\d{5}$/.test(zipCode.value);
-        if (zipCodeValidation) {
-            validationPass(zipCode);
-            zipHint.style.display= 'none';
-          } else {
-            validationFail(zipCode);
-            zipHint.style.display= 'block';
-          }
-        let cvvValidation = /^\d{3}$/.test(cvv.value);
-        if (cvvValidation) {
-            validationPass(cvv);
-            cvvHint.style.display= 'none';
-          } else {
-            validationFail(cvv);
-            cvvHint.style.display= 'block';
-          }
-        return ccNumValidation && zipCodeValidation && cvvValidation;;
-    }
-    
 
-    for (let i=0; i < activitiesBox.length; i++) {
-        activitiesBox[i].addEventListener('focus', (e) => {
-            activitiesBox[i].parentElement.classList = 'focus';
-        });
-        activitiesBox[i].addEventListener('blur', (e) => {
-            activitiesBox[i].parentElement.classList.remove('focus');
-        });
-    }
-    
-    
-    function validationFail(element){
-        element.parentElement.classList.add('not-valid');
-        element.parentElement.classList.remove('valid');
-        element.parentElement.lastElementChild.style.display = 'block';
-    }
-    
-    function validationPass(element) {
-        element.parentElement.classList.add('valid');
-        element.parentElement.classList.remove('not-valid');
-        element.parentElement.lastElementChild.style.display = 'none';  
-    }
-    
-   
-    
+    function NameValid() {
+        return regexName = /^[a-zA-z ,.'-]+$/.test(nameElement);
+    };
+    function EmailValid() {
+        return regexEmail = /^[^@]+@[^@]+\.[a-z]+$/i.test(email);
+    };
+    function ActivityChecked() {
+        if (totalCost === 0) {
+            return false;
+        } else {
+            return true;
+        }
+    };
+    function CCNumValid() {
+        return regexCCNum = /^\d{13,16}$/.test(ccNum);
+    };
+    function ZipValid() {
+        return regexZip = /^\d{5}$/.test(zip);
+    };
+    function CVVValid() {
+        return regexCVV = /^\d{3}$/.test(cvv);
+    };
+  
+    if (!NameValid()) {
+        e.preventDefault();
+        notValid(nameElement);
+    } else {
+        isValid(nameElement);
+    };
+
+    if (!EmailValid()) {
+        e.preventDefault();
+        notValid(email);
+    } else {
+        isValid(email);
+    };
+    if (!ActivityChecked()) {
+        e.preventDefault();
+        notValid(activitiesBox);
+    } else {
+        isValid(activitiesBox);
+    };
+
+
+    if (payment.children[1].selected === true) {
+        if (!CCNumValid()) {
+            e.preventDefault();
+            notValid(ccNum);
+        } else {
+            isValid(ccNum);
+        };
+        if (!ZipValid()) {
+            e.preventDefault();
+            notValid(zip);
+        } else {
+            isValid(zip);
+        };
+        if (!CVVValid()) {
+            e.preventDefault();
+            notValid(cvv);
+        } else {
+            isValid(cvv);
+        };
+    };
+});
+
+for (let i = 0; i < checkbox.length; i++) {
+    checkbox[i].addEventListener('focus', (e) => {
+        checkbox[i].parentNode.classList.add('focus');
+    });
+    checkbox[i].addEventListener('blur', (e) => {
+        checkbox[i].parentNode.classList.remove('focus');
+    });
+};
+
