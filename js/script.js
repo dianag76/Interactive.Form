@@ -95,15 +95,18 @@ payment.addEventListener('change',(e)=> {
         }
     });
 
+
   
 //Form Validation- Users will not be allowed to submit form without the required information.
 
 form.addEventListener('submit', (e) => {
     function NameValid() {
-        return regexName = /^[a-zA-z ,.'-]+$/.test(nameElement);
+        console.log(nameElement.value)
+        return regexName = /^[a-zA-z ,.'-]+$/.test(nameElement.value);
     };
     function EmailValid() {
-        return regexEmail = /^[^@]+@[^@]+\.[a-z]+$/i.test(email);
+        console.log(email.value)
+        return regexEmail = /^[^@]+@[^@]+\.[a-z]+$/i.test(email.value);
     };
     function ActivityChecked() {
         if (totalCost === 0) {
@@ -113,18 +116,21 @@ form.addEventListener('submit', (e) => {
         }
     };
     function CCNumValid() {
-        return regexCCNum = /^\d{13,16}$/.test(ccNum);
+        console.log(ccNum.value)
+        return regexCCNum = /^\d{13,16}$/.test(ccNum.value);
     };
     function ZipValid() {
-        return regexZip = /^\d{5}$/.test(zip);
+        console.log(zip.value)
+        return regexZip = /^\d{5}$/.test(zip.value);
     };
     function CVVValid() {
-        return regexCVV = /^\d{3}$/.test(cvv);
+        console.log(cvv.value)
+        return regexCVV = /^\d{3}$/.test(cvv.value);
     };
   
     if (!NameValid()) {
         e.preventDefault();
-        notValid(nameElement);
+        notValid();
     } else {
         isValid(nameElement);
     };
