@@ -130,7 +130,7 @@ form.addEventListener('submit', (e) => {
   
     if (!NameValid()) {
         e.preventDefault();
-        notValid();
+        notValid(nameElement);
     } else {
         isValid(nameElement);
     };
